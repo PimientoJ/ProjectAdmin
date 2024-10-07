@@ -1,0 +1,83 @@
+nz-header {
+    background: #fff;
+    height: 120px;
+}
+
+nz-breadcrumb {
+    margin: 16px 0;
+}
+
+.from-tittle {
+    font-family: 'Times New Roman', serif;
+    font-weight: bold;
+    text-align: center;
+}
+
+nz-content {
+    padding-left: 25px;
+    padding-right: 25px;
+    background: #fff;
+    border-radius: 15px;
+    box-shadow: 3px 3px #8e94c044;
+}
+
+z-tabled {
+    text-align: center;
+    /* background: #fff;*/
+}
+
+[nz-button] {
+    margin-right: 8px;
+    margin-bottom: 12px;
+}
+
+.BotonEliminar {
+    top: 50%;
+    left: 50%;
+    margin: -25px 0 0 -25px;
+}
+
+.encabezadoTabla {
+    background: #8FB1F2;
+}
+
+.btn-text-right {
+    text-align: right;
+    display: inline-block;
+    width: 50%;
+}
+
+.text-left {
+    width: 50%;
+    display: inline-block;
+}
+
+.icons {
+    font-size: 20px;
+    margin-right: 20px;
+}
+
+.icono-retar {
+    font-size: 15px;
+    margin-left: 20px;
+    color: red;
+    margin-top: 10px;
+}
+
+.search-box {
+    padding: 8px;
+}
+
+.search-box input {
+    width: 188px;
+    margin-bottom: 8px;
+    display: block;
+}
+
+.search-box button {
+    width: 90px;
+}
+
+.search-button {
+    margin-right: 8px;
+}

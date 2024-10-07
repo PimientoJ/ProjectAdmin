@@ -1,0 +1,41 @@
+<div class="formContenido">
+    <div>
+        <h3 class="from-tittle">EVALUACIÓN: ANTEPROYECTO</h3>
+        <hr>
+        <br>
+    </div>
+
+
+    <nz-input-group class="buscar" [nzSuffix]="suffixIconSearch">
+        <input type="text" nz-input placeholder="Buscar por titulo del poyecto" />
+    </nz-input-group>
+    <ng-template #suffixIconSearch>
+        <span nz-icon nzType="search"></span>
+    </ng-template>
+
+    <nz-cascader class="filtro" [nzExpandTrigger]="'hover'" [nzOptions]="nzOptions" [(ngModel)]="values" (ngModelChange)="onChanges($event)"></nz-cascader>
+
+
+    <br />
+
+    <br />
+    <nz-table #editRowTable nzBordered [nzData]="listOfData">
+        <thead>
+            <tr>
+                <th class="proyecto">Título del proyecto</th>
+                <th>Estado</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let data of editRowTable.data" class="editable-row">
+
+                <td>
+                    <a>Desarrollar ua aplicación web para la gestión de los trabajos
+                    de grado de la Universidad de Santander, udes campus Cúcuta</a>
+                </td>
+                <td>Aprobado</td>
+            </tr>
+        </tbody>
+    </nz-table>
+</div>

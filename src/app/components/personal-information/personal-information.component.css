@@ -1,0 +1,19 @@
+nz-card {
+    width: 100%;
+    border-radius: 15px;
+    margin-bottom: 10px;
+    box-shadow: 3px 3px #8e94c044;
+}
+
+.textoSub {
+    font-weight: bold;
+    font-family: New Roman;
+    font-size: 18px;
+    margin-left: 20px;
+}
+
+.text {
+    font-style: italic;
+    font-family: New Roman;
+    font-size: 18px;
+}

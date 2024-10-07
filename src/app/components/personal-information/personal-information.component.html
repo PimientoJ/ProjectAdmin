@@ -1,0 +1,47 @@
+<nz-card>
+    <h2>Informacion básica</h2>
+    <hr>
+    <br>
+    <br>
+    <div *ngIf="users">
+        <div nz-row>
+            <div nz-col nzSpan="8" class="textoSub">Nombre:</div>
+            <div nz-col nzSpan="12" class="text">{{users.nombre}}</div>
+        </div>
+        <br>
+        <hr>
+        <br>
+        <div nz-row>
+            <div nz-col nzSpan="8" class="textoSub">Código:</div>
+            <div nz-col nzSpan="12" class="text">{{users.codigo}}</div>
+        </div>
+        <br>
+        <hr>
+        <br>
+        <div nz-row *ngIf="usersRol">
+            <div nz-col nzSpan="8" class="textoSub">Rol:</div>
+            <div nz-col nzSpan="12" class="text">{{this.usersRol}}</div>
+        </div>
+    </div>
+</nz-card>
+
+<nz-card>
+    <h2>Información de contacto</h2>
+    <hr>
+    <br>
+    <br>
+    <div *ngIf="users">
+        <div nz-row>
+            <div nz-col nzSpan="8" class="textoSub">Correo electrónico:</div>
+            <div nz-col nzSpan="11" class="text">{{users.correo}}</div>
+        </div>
+        <br>
+        <hr>
+        <br>
+        <div nz-row>
+            <div nz-col nzSpan="8" class="textoSub">Teléfono:</div>
+            <div nz-col nzSpan="12" class="text">{{users.celular}}</div>
+        </div>
+        <br>
+    </div>
+</nz-card>

@@ -1,0 +1,19 @@
+.from-tittle {
+    font-family: 'Times New Roman', serif;
+    font-weight: bold;
+    padding: 20px;
+    text-align: center;
+}
+
+nz-header {
+    background: #fff;
+}
+
+nz-breadcrumb {
+    margin: 16px 0;
+}
+
+nz-content {
+    background: #fff;
+    min-height: 400px;
+}

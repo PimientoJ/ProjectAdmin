@@ -1,0 +1,29 @@
+<nz-layout>
+    <nz-header>
+        <nz-breadcrumb>
+            <h3 class="from-tittle">CONFIGURACIÓN DEL SISTEMA</h3>
+        </nz-breadcrumb>
+    </nz-header>
+    <nz-content>
+        <nz-layout>
+            <nz-header>
+                <ul nz-menu nzMode="horizontal">
+                    <li nz-menu-item routerLink="PersonalInformation" routerLinkActive="active">
+                        <div>
+                            <span nz-icon nzType="snippets" nzTheme="outline"></span> Informacion personal
+                        </div>
+                    </li>
+                    <li nz-menu-item routerLink="Security" routerLinkActive="active">
+                        <div>
+                            <span nz-icon nzType="unlock" nzTheme="outline"></span> Seguridad
+                        </div>
+                    </li>
+                </ul>
+            </nz-header>
+            <nz-content>
+                <router-outlet>
+                </router-outlet>
+            </nz-content>
+        </nz-layout>
+    </nz-content>
+</nz-layout>

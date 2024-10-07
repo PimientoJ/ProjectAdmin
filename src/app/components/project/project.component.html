@@ -1,0 +1,146 @@
+<nz-layout>
+    <nz-header>
+        <h3 class="from-tittle">PROYECTOS DE INGENIERÍA</h3>
+        <hr>
+    </nz-header>
+    <nz-content>
+        <div class="inner-content">
+            <br />
+            <nz-table #nzTable nzTableLayout="fixed">
+                <thead>
+                    <tr>
+                        <th nzWidth="20%">Proyecto</th>
+                        <th>Director</th>
+                        <th>Codiretor</th>
+                        <th>Proceso</th>
+                        <th>Estado</th>
+                        <th>Autores</th>
+                        <th>Jurado del proyecto</th>
+                        <th nzWidth="7%">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of data" class="editable-row">
+                        <ng-container>
+                            <td>{{item.titulo}}</td>
+                            <td>{{item.director}}</td>
+                            <td>{{item.codirector}}</td>
+                            <td>{{item.proceso}}</td>
+                            <td>{{item.estadoProceso}}</td>
+                            <td>
+                                <a (click)="datosStuden(item._id)">Estudiante <span nz-icon nzType="usergroup-delete" nzTheme="outline"></span></a>
+                            </td>
+                            <td>
+                                <a (click)="datosJurado(item._id)">Jurado <span nz-icon nzType="user-switch" nzTheme="outline"></span></a>
+                            </td>
+                            <td>
+                                <a><span nz-icon nzType="edit" nzTheme="outline" class="icons" (click)="editarDatosProyecto(item._id)"></span></a>
+                                <!--Inicio de drawer de editar el usuario-->
+                                <nz-drawer [nzBodyStyle]="{ overflow: 'auto' }" [nzMaskClosable]="false" [nzWidth]="500" [nzVisible]="visible" nzTitle="Editar usuario" [nzFooter]="footerTpl" (nzOnClose)="close()">
+                                    <form nz-form *nzDrawerContent>
+                                        <nz-form-item>
+                                            <nz-form-label [nzSpan]="10">Proyecto</nz-form-label>
+                                            <nz-form-control [nzSpan]="14">
+                                                <textarea nz-input [(ngModel)]="titulo" name="titulo" [nzAutosize]="{ minRows: 3, maxRows: 5 }"></textarea>
+                                            </nz-form-control>
+                                        </nz-form-item>
+                                        <nz-form-item>
+                                            <nz-form-label [nzSpan]="10">Director</nz-form-label>
+                                            <nz-form-control [nzSpan]="14">
+                                                <input type="text" nz-input [(ngModel)]="director" name="director" />
+                                            </nz-form-control>
+                                        </nz-form-item>
+                                        <nz-form-item>
+                                            <nz-form-label [nzSpan]="10">Codirector</nz-form-label>
+                                            <nz-form-control [nzSpan]="14">
+                                                <input type="text" nz-input [(ngModel)]="codirector" name="codirector" />
+                                            </nz-form-control>
+                                        </nz-form-item>
+                                    </form>
+                                    <ng-template #footerTpl>
+                                        <div style="float: right">
+                                            <button nz-button style="margin-right: 8px;" (click)="close()">Cancel</button>
+                                            <button nz-button nzType="primary" (click)="actualizarDatos()">Actualizar</button>
+                                        </div>
+                                    </ng-template>
+                                </nz-drawer>
+                                <!--fin de drawer-->
+
+                                <a nz-popconfirm (nzOnConfirm)="eliminarDatosProyecto(item._id)" nzPopconfirmTitle="¿Estas seguro de eliminar el proyecto?">
+                                    <span nz-icon nzType="delete" nzTheme="outline" style="color: red;" class="icons"></span>
+                                </a>
+                            </td>
+                        </ng-container>
+                    </tr>
+                </tbody>
+            </nz-table>
+        </div>
+    </nz-content>
+</nz-layout>
+
+<!--Inicio del modal estudiante-->
+<nz-modal [(nzVisible)]="visibleModalStuden" nzTitle="Autores del proyecto" (nzOnCancel)="cancelar()" (nzOnOk)="aceptar()">
+    <ng-container *nzModalContent>
+        <form nz-form [formGroup]="validateForm">
+            @for (control of listOfControl; track control; let i = $index) {
+            <nz-form-item>
+                @if (i === 0) {
+                <nz-form-label [nzXs]="24" [nzSm]="4" [nzFor]="control.nombre"> Estudiante </nz-form-label>
+                }
+                <nz-form-control [nzXs]="24" [nzSm]="20" [nzOffset]="i === 0 ? 0 : 4" nzErrorTip="Por favor ingrese el nombre del estudiante o elimine este campo">
+                    <input class="passenger-input" nz-input [attr.id]="control.id" [formControlName]="control.nombre" value="{{control.nombre}}" />
+                    <span nz-icon nzType="minus-circle-o" class="dynamic-delete-button" (click)="removeField(control, $event)"></span>
+                </nz-form-control>
+            </nz-form-item>
+            }
+
+            <nz-form-item>
+                <nz-form-control [nzXs]="{ span: 24, offset: 0 }" [nzSm]="{ span: 20, offset: 4 }">
+                    <button nz-button nzType="dashed" class="add-button" (click)="agregarCampoEstudiante($event)">
+                  <span nz-icon nzType="plus"></span>
+                  Agregar estudiante
+                </button>
+                </nz-form-control>
+            </nz-form-item>
+        </form>
+    </ng-container>
+</nz-modal>
+<!--Fin del modal estudiante -->
+
+<!--Inicio del modal Jurado-->
+<nz-modal [(nzVisible)]="visibleModalJurado" nzTitle="Jurados del proyecto" (nzOnCancel)="cancelarModalJurado()" (nzOnOk)="aceptarModalJurado()">
+    <ng-container *nzModalContent>
+        <form class="formulario" nz-form [formGroup]="validateForm" method="post">
+            <!-- Numero de jurados -->
+            <nz-form-item *ngIf="jurado1">
+                <nz-form-label [nzSpan]="6" nzRequired>Jurado</nz-form-label>
+                <nz-form-control [nzSpan]="16" nzHasFeedback>
+                    <input nz-input class="passenger-input" type="text" formControlName="jurado1" value="{{this.valuejurado1}}" />
+                    <!--<span *ngIf="botonIngresarjurado" nz-icon nzType="plus-circle" nzTheme="outline" class="dynamic-button" nzTooltipTitle="Solo se puede agregar maximo 3 jurados por proyecto" nz-tooltip (click)="Agregarjurado($event)"></span>-->
+                    <span nz-icon nzType="delete" nzTheme="outline" style="color: red;" (click)="eliminarJurado()"></span>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item *ngIf="jurado2">
+                <nz-form-label [nzSpan]="6" nzRequired>Jurado</nz-form-label>
+                <nz-form-control [nzSpan]="16" nzHasFeedback>
+                    <input nz-input class="passenger-input" type="text" formControlName="jurado2" value="{{this.valuejurado2}}" />
+                    <span nz-icon nzType="delete" nzTheme="outline" style="color: red;"></span>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item *ngIf="jurado3">
+                <nz-form-label [nzSpan]="6" nzRequired>Jurado</nz-form-label>
+                <nz-form-control [nzSpan]="16" nzHasFeedback>
+                    <input nz-input class="passenger-input" type="text" formControlName="jurado3" value="{{this.valuejurado3}}" />
+                    <span nz-icon nzType="delete" nzTheme="outline" style="color: red;"></span>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item *ngIf="botonIngresarjurado">
+                <nz-form-control [nzSpan]="16" nzHasFeedback>
+                    <button nz-button nzType="dashed" class="add-button" (click)="Agregarjurado($event)">
+                        <span nz-icon nzType="plus" nzTheme="outline"></span>Asignar jurado</button>
+                </nz-form-control>
+            </nz-form-item>
+        </form>
+    </ng-container>
+</nz-modal>
+<!--Fin del modal jurado-->

@@ -1,0 +1,91 @@
+<div class="formContenido">
+    <div>
+        <h3 class="from-tittle">REGISTRO DE USUARIO</h3>
+        <hr>
+        <br>
+    </div>
+    <nz-card>
+        <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
+            <!--Usuario-->
+            <nz-form-item>
+                <nz-form-label [nzSpan]="7" nzRequired>Nombre</nz-form-label>
+                <nz-form-control [nzSpan]="30" nzHasFeedback nzValidatingTip="Validating..." [nzErrorTip]="userErrorTpl">
+                    <input nz-input formControlName="userName" />
+                    <ng-template #userErrorTpl let-control>
+                        <ng-container *ngIf="control.hasError('required')">¡Por favor ingrese el nombre del usuario!</ng-container>
+                    </ng-template>
+                </nz-form-control>
+            </nz-form-item>
+            <!--Codigo del usuario-->
+            <nz-form-item>
+                <nz-form-label [nzSpan]="7" nzRequired>Codigo</nz-form-label>
+                <nz-form-control [nzSpan]="30" nzHasFeedback [nzErrorTip]="emailErrorTpl">
+                    <input nz-input formControlName="codigo" type="number" />
+                    <ng-template #emailErrorTpl let-control>
+                        <ng-container *ngIf="control.hasError('required')">¡Por favor ingrese el codigo del usuario!</ng-container>
+                    </ng-template>
+                </nz-form-control>
+            </nz-form-item>
+            <!--Numero telefonico del usuario-->
+            <nz-form-item>
+                <nz-form-label [nzSpan]="7" nzRequired>Numero teléfonico</nz-form-label>
+                <nz-form-control [nzSpan]="30" nzHasFeedback [nzErrorTip]="emailErrorTpl">
+                    <input nz-input formControlName="telefono" type="number" />
+                    <ng-template #emailErrorTpl let-control>
+                        <ng-container *ngIf="control.hasError('required')">¡Por favor ingrese el numero de teléfono del usuario!</ng-container>
+                    </ng-template>
+                </nz-form-control>
+            </nz-form-item>
+            <!--Correo electronico-->
+            <nz-form-item>
+                <nz-form-label [nzSpan]="7" nzRequired>E-mail</nz-form-label>
+                <nz-form-control [nzSpan]="30" nzHasFeedback [nzErrorTip]="emailErrorTpl">
+                    <input nz-input formControlName="email" type="email" />
+                    <ng-template #emailErrorTpl let-control>
+                        <ng-container *ngIf="control.hasError('email')">¡Por favor ingrese un correo electrónico valido!</ng-container>
+                    </ng-template>
+                </nz-form-control>
+            </nz-form-item>
+            <!--Contraseña-->
+            <nz-form-item>
+                <nz-form-label [nzSpan]="7" nzRequired>Contraseña</nz-form-label>
+                <nz-form-control [nzSpan]="30" nzHasFeedback nzErrorTip="¡Por favor ingrese una contraseña!">
+                    <input nz-input type="password" formControlName="password" />
+                </nz-form-control>
+            </nz-form-item>
+            <!--Seleccionar usuario-->
+            <nz-form-item>
+                <nz-form-label [nzSpan]="7" nzRequired>Tipo de usuario</nz-form-label>
+                <nz-form-control [nzSpan]="30">
+                    <nz-select nzShowSearch nzAllowClear formControlName="opcionSeleccionado" nzPlaceHolder="Seleccionar rol">
+                        <nz-option *ngFor="let rol of listaRoles" nzValue="{{rol._id}}" nzLabel="{{rol.nombre}}"></nz-option>
+                    </nz-select>
+                </nz-form-control>
+            </nz-form-item>
+
+            <!-- <nz-modal [(nzVisible)]="isVisible" nzTitle="Ingresar el rol del usuario" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()" [nzOkLoading]="isOkLoading">
+                <div *nzModalContent>
+                    <form nz-form>
+                        <nz-form-item>
+                            <nz-form-label [nzSpan]="7" nzRequired>Tipo de usuario</nz-form-label>
+                            <nz-form-control [nzSpan]="30">
+                                <nz-select nzShowSearch nzAllowClear [(ngModel)]="opcionSeleccionado" name="rol" id="rol" (ngModelChange)="obtenerDatosRol()">
+                                    <nz-option nzValue="0" nzLabel="Seleccione una opcion"></nz-option>
+                                    <nz-option *ngFor="let rol of roles" nzLabel="{{rol}}"></nz-option>
+                                </nz-select>
+                                <p [hidden]="opcionSeleccionado== '0'">Has seleccionado la opcion # {{verSeleccion}}</p>
+                            </nz-form-control>
+                        </nz-form-item>
+                    </form>
+                </div>
+            </nz-modal>-->
+            <!--Botones-->
+            <nz-form-item>
+                <nz-form-control [nzOffset]="7" [nzSpan]="30">
+                    <button nz-button nzType="primary" [disabled]="!validateForm.valid">Registrar Usuario</button>
+                    <button nz-button (click)="resetForm($event)">Cancelar</button>
+                </nz-form-control>
+            </nz-form-item>
+        </form>
+    </nz-card>
+</div>

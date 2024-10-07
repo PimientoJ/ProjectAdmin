@@ -1,0 +1,33 @@
+<div class="form-background">
+    <div>
+        <img class="logo-img" src="../assets/logo-udes.png">
+    </div>
+    <div class="form-contenido">
+        <form [formGroup]="validateForm" nz-form class="login-form" (ngSubmit)="enviarDatosLogin()" method="post">
+            <!--Titulo-->
+            <div>
+                <H3 class="title-login">INICIAR SESIÓN</H3>
+            </div>
+            <!--Input del correo-->
+            <nz-form-item>
+                <nz-form-control nzErrorTip="¡Por favor ingrese su usuario!">
+                    <nz-input-group nzPrefixIcon="user">
+                        <input type="email" nz-input placeholder="Usuario" autocomplete="on" formControlName="correo" required="required" />
+                    </nz-input-group>
+                </nz-form-control>
+            </nz-form-item>
+            <!--Input del contraseña-->
+            <nz-form-item>
+                <nz-form-control nzErrorTip="¡Por favor ingrese su contraseña!">
+                    <nz-input-group nzPrefixIcon="lock">
+                        <!--<input type="pass" nz-input placeholder="Contraseña" autocomplete="off" [(ngModel)]="usuario.pass" name="pass" />-->
+                        <input type="password" nz-input placeholder="Contraseña" autocomplete="off" formControlName="pass" />
+                    </nz-input-group>
+                </nz-form-control>
+            </nz-form-item>
+            <!--Boton-->
+            <button nz-button class="login-form-button login-form-margin" [nzType]="'primary'">Aceptar</button>
+            <!--<a>Restablecer contraseña</a>-->
+        </form>
+    </div>
+</div>

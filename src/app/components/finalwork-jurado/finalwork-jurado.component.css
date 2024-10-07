@@ -1,0 +1,32 @@
+.editable-cell {
+    position: relative;
+    padding: 5px 12px;
+    cursor: pointer;
+}
+
+.editable-row:hover .editable-cell {
+    border: 1px solid #d9d9d9;
+    border-radius: 4px;
+    padding: 4px 11px;
+}
+
+.proyecto {
+    text-align: center;
+}
+
+.formContenido {
+    padding: 20px;
+}
+
+.boton {
+    width: 25px;
+}
+
+.buscar {
+    width: 400px;
+}
+
+.filtro {
+    position: relative;
+    left: 520px;
+}

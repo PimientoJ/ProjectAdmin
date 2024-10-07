@@ -1,0 +1,48 @@
+<nz-layout>
+    <nz-header>
+        <nz-breadcrumb>
+            <app-header></app-header>
+            <hr>
+        </nz-breadcrumb>
+    </nz-header>
+    <nz-content>
+        <div>
+            <div>
+                <h3 style="font-weight: bold; font-family:New Roman">SUTENTACION PROPUESTA DE GRADO:</h3>
+            </div>
+            <div class="centrar-contenedor">
+                <br/>
+                <div *ngIf="SubirArchivo">
+                    <p>Formato de evalución de la sustentación (Acta de sustentación):</p>
+                    <nz-upload [(nzFileList)]="fileList" [nzBeforeUpload]="beforeUpload">
+                        <button nz-button>
+                          <span nz-icon nzType="upload"></span>
+                          Seleccionar el archivo
+                        </button>
+                    </nz-upload>
+                    <button nz-button [nzType]="'primary'" [nzLoading]="uploading" (click)="handleUpload()" [disabled]="fileList.length === 0" style="margin-top: 16px">
+                        {{ uploading ? 'Subiendo archivo' : 'Subir archivo' }}
+                      </button>
+                </div>
+                <div class="mat-elevation-z8 centrar-contenedor" *ngIf="Calificacion">
+                    <form class="formulario" nz-form>
+                        <!-- Calificacion -->
+                        <nz-form-item>
+                            <nz-form-label [nzSpan]="7" nzRequired>Calificación del proyecto de grado</nz-form-label>
+                            <nz-form-control [nzSpan]="16" nzHasFeedback>
+                                <input nz-input type="text" [disabled]="true" />
+                            </nz-form-control>
+                        </nz-form-item>
+                        <!-- estado del proyecto -->
+                        <nz-form-item>
+                            <nz-form-label [nzSpan]="7" nzRequired>Estado del proyecto de grado</nz-form-label>
+                            <nz-form-control [nzSpan]="16" nzHasFeedback>
+                                <input nz-input type="text" [disabled]="true" />
+                            </nz-form-control>
+                        </nz-form-item>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </nz-content>
+</nz-layout>

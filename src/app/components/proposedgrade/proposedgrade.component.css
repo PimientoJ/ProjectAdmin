@@ -1,0 +1,79 @@
+nz-header {
+    background: #fff;
+    height: 120px;
+}
+
+nz-breadcrumb {
+    margin: 16px 0;
+}
+
+.from-tittle {
+    font-family: 'Times New Roman', serif;
+    font-weight: bold;
+    text-align: center;
+}
+
+nz-content {
+    padding-left: 25px;
+    padding-right: 25px;
+    background: #fff;
+}
+
+.inner-content {
+    padding: 10px;
+    background: #fff;
+    min-height: 460px;
+}
+
+[nz-button] {
+    margin-right: 8px;
+    margin-bottom: 12px;
+    justify-content: center;
+}
+
+.editable-cell {
+    position: relative;
+    padding: 5px 12px;
+    cursor: pointer;
+}
+
+.editable-row:hover .editable-cell {
+    border: 1px solid #d9d9d9;
+    border-radius: 4px;
+    padding: 4px 11px;
+}
+
+.button-commit {
+    display: flex;
+    justify-content: center;
+}
+
+nz-date-picker {
+    margin: 0 8px 12px 0;
+}
+
+nz-select {
+    width: 50%;
+}
+
+.dynamic-button {
+    cursor: pointer;
+    position: relative;
+    top: 4px;
+    font-size: 24px;
+    color: #AEEE2E;
+    transition: all 0.3s;
+}
+
+.dynamic-button:hover {
+    color: #54D7EF;
+}
+
+.passenger-input {
+    width: 80%;
+    margin-right: 8px;
+}
+
+.dynamic-delete-button:hover {
+    color: #777;
+}

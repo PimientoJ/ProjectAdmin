@@ -1,0 +1,44 @@
+.logo {
+    height: 70px;
+    margin: 16px;
+}
+
+.img-logo {
+    width: 100%;
+    height: auto;
+}
+
+.TextName {
+    height: 80px;
+    font-family: 'Times New Roman', serif;
+    font-weight: bold;
+    text-align: center;
+    padding: 10px;
+}
+
+
+/**Icono del modal*/
+
+.icons {
+    color: rgb(241, 85, 46);
+    font-size: 20px;
+}
+
+.modal-title {
+    font-family: 'Times New Roman', serif;
+    font-weight: bold;
+}
+
+nz-content {
+    margin: 0 16px;
+}
+
+.inner-content {
+    padding: 10px;
+    background: #fff;
+    min-height: 100vh;
+}
+
+nz-footer {
+    text-align: center;
+}

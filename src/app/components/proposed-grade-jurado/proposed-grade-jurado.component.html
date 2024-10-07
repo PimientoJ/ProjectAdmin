@@ -1,0 +1,36 @@
+<div class="inner-content " *ngIf="TablaEstado">
+    <div>
+        <h3 style="font-weight: bold; font-family:New Roman ">ESTADO DE APROBACIÓN POR PARTE DEL CÓMITE: </h3>
+        <BR>
+    </div>
+    <nz-table>
+        <thead>
+            <tr>
+                <th>Fecha</th>
+                <th>Nombre del proyecto de grado</th>
+                <th>Estado</th>
+                <th>Tipo</th>
+                <th>Comentarios</th>
+                <th>Nota</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let proyecto of datoProyecto">
+                <td>{{proyecto.fecha | date:'longDate'}}</td>
+                <td>{{proyecto.titulo}}</td>
+                <td>
+                    <a>{{proyecto.estadoProceso}}</a>
+                </td>
+                <td>
+                    {{proyecto.proceso}}
+                </td>
+                <td>
+                    {{proyecto.comentario}}
+                </td>
+                <td>
+                    <a>{{proyecto.nota}}</a>
+                </td>
+            </tr>
+        </tbody>
+    </nz-table>
+</div>

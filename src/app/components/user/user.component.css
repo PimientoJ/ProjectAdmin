@@ -1,0 +1,33 @@
+.from-tittle {
+    font-family: 'Times New Roman', serif;
+    font-weight: bold;
+    text-align: center;
+}
+
+nz-header {
+    background: #fff;
+    height: 80px;
+}
+
+.inner-content {
+    padding: 10px;
+    background: #fff;
+    min-height: 400px;
+}
+
+.editable-cell {
+    position: relative;
+    padding: 5px 12px;
+    cursor: pointer;
+}
+
+.editable-row:hover .editable-cell {
+    border: 1px solid #d9d9d9;
+    border-radius: 4px;
+    padding: 4px 11px;
+}
+
+.icons {
+    font-size: 20px;
+    margin-right: 20px;
+}

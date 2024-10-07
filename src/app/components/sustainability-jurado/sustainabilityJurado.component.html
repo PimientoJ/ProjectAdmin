@@ -1,0 +1,60 @@
+<div class="formContenido">
+    <div>
+        <h3 class="from-tittle">LISTAS DE PROPUESTAS DE TRABAJO DE GRADO CALIFICACIÓN.</h3>
+        <hr>
+        <br>
+    </div>
+
+    <nz-input-group class="buscar" [nzSuffix]="suffixIconSearch">
+        <input type="text" nz-input placeholder="Buscar poyecto" />
+    </nz-input-group>
+    <ng-template #suffixIconSearch>
+        <span nz-icon nzType="search"></span>
+    </ng-template>
+    <br />
+
+    <br />
+    <nz-table #editRowTable nzBordered [nzData]="listOfData">
+        <thead>
+            <tr>
+                <th class="proyecto">Titulo del proyecto</th>
+                <th>Estado</th>
+                <th>Calificación</th>
+
+            </tr>
+        </thead>
+        <tbody>
+
+            <tr class="editable-row" *ngFor="let project of projects; let i = index">
+                <ng-container>
+                    <td>
+                        <p>{{ project.titulo }}</p>
+                    </td>
+                    <td>{{ project.estadoProceso }}</td>
+
+                    <td>
+                        <button nz-button [nzType]="'primary'" (click)="showModal()"><span>Calificación</span></button>
+                        <nz-modal [(nzVisible)]="isVisible" nzTitle="Calificación" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk(calificacion)">
+                            <ng-container *nzModalContent>
+                                <div>
+                                    <legend>Calificacion: </legend>
+                                    <nz-row>
+                                        <nz-col nzSpan="12">
+                                            <nz-slider [nzMin]="1" [nzMax]="5" [(ngModel)]="calificacion" [nzStep]="0.1" nzDisabled="false"></nz-slider>
+                                        </nz-col>
+                                        <div nz-col nzSpan="4">
+                                            <nz-input-number [nzMin]="1" [nzMax]="20" [ngStyle]="{ marginLeft: '16px' }" [(ngModel)]="calificacion"></nz-input-number>
+                                        </div>
+                                    </nz-row>
+                                </div>
+                                <legend>Anexar documento: </legend>
+                                <input type="file">
+                            </ng-container>
+                        </nz-modal>
+                    </td>
+                </ng-container>
+            </tr>
+        </tbody>
+    </nz-table>
+
+</div>

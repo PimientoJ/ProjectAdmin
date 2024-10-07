@@ -1,0 +1,31 @@
+.from-tittle {
+    text-align: center;
+    font-family: 'Times New Roman', serif;
+    font-weight: bold;
+}
+
+.formContenido {
+    padding: 20px;
+}
+
+.textUser {
+    text-align: center;
+    font-family: 'Times New Roman', serif;
+    font-weight: bold;
+    padding: 20px;
+}
+
+[nz-form] {
+    max-width: 600px;
+}
+
+button {
+    margin-left: 8px;
+}
+
+nz-card {
+    width: 100%;
+    border-radius: 15px;
+    margin-bottom: 10px;
+    box-shadow: 3px 3px #8e94c044;
+}

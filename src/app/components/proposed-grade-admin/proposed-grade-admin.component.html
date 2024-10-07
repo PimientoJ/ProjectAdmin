@@ -1,0 +1,84 @@
+<div class="formContenido">
+    <div>
+        <h3 class="from-tittle">LISTAS DE TRABAJOS DE GRADO.</h3>
+        <hr>
+        <br>
+    </div>
+
+    <!-- <nz-input-group class="buscar" [nzSuffix]="suffixIconSearch">
+        <input type="text" nz-input placeholder="Buscar poyecto" #txtBuscarProyecto (keyup.enter)="buscarProyecto()" />
+    </nz-input-group>
+    <ng-template #suffixIconSearch>
+        <span nz-icon nzType="search"></span>
+    </ng-template>
+    <br />-->
+
+    <br />
+    <nz-table #editRowTable nzBordered [nzData]="listOfData">
+        <thead>
+            <tr>
+                <th class="proyecto">Título del proyecto</th>
+                <th>Descarga</th>
+                <th>Ver</th>
+                <th>Proceso</th>
+                <th>Estado</th>
+                <th>Nota</th>
+                <th>Acción</th>
+
+            </tr>
+        </thead>
+        <tbody>
+
+            <tr class="editable-row" *ngFor="let project of projects; let i = index">
+                <ng-container>
+                    <td>
+                        <p>{{ project.titulo }}</p>
+                    </td>
+                    <td><span nz-icon nzType="cloud-download" nzTheme="outline" style="color: blue; margin-left: 40%;" (click)="downloadFile(project._id)"></span></td>
+                    <td>
+                        <span nz-icon nzType="eye" nzTheme="outline" style="color: green; margin-left: 40%;" (click)="previewFile(project._id)"></span>
+                    </td>
+                    <td>{{ project.proceso }}</td>
+                    <td>{{ project.estadoProceso }}</td>
+                    <td>{{ project.nota }}</td>
+                    <td>
+                        <span nz-icon nzType="file-done" nzTheme="outline" (click)="showModal(project._id)" style="color: rgb(255, 85, 0); margin-left: 40%;"></span>
+                        <nz-modal [(nzVisible)]="isVisible" [nzTitle]="projectId?.titulo" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
+                            <ng-container *nzModalContent>
+                                <div>
+                                    <legend>Ingresar nota</legend>
+                                    <nz-input-number [nzSize]="'large'" [nzMin]="1.0" [nzMax]="5.0" [nzStep]="1.0" [(ngModel)]="demoValue" name="demoValue"></nz-input-number>
+                                    <br>
+                                    <br>
+                                    <textarea nz-input placeholder=" Realizar comentario " [nzAutosize]="{ minRows: 3, maxRows: 5 } " [(ngModel)]="comentario" name="comentario"></textarea>
+                                </div>
+
+                                <!--<div>
+                                    <legend>Estado</legend>
+                                    <label *ngFor="let estado of [ 'Aprobado', 'Pendiente', 'Rechazado'] ">
+                                        <input type="radio " 
+                                               name="estado "
+                                               [value]="estado "
+                                               [checked]="projectId?.estadoProceso===e stado "
+                                               (change)="onCheckboxChange($event, estado, projectId?._id) ">
+                                        {{ estado }}
+                                    </label>
+                                    <legend>Proceso</legend>
+                                    <label *ngFor="let estadoProyecto of [ 'Propuesta de grado', 'Anteproyecto', 'Sustentacion', 'Proyecto Final'] ">
+                                        <input type="radio " 
+                                               name="estadoProyecto "
+                                               [value]="estadoProyecto "
+                                               [checked]="projectId?.proceso===e stadoProyecto "
+                                               (change)="onCheckboxChangeProceso($event, estadoProyecto, projectId?._id) ">
+                                        {{ estadoProyecto }}
+                                    </label>
+                                </div>-->
+                            </ng-container>
+                        </nz-modal>
+                    </td>
+                </ng-container>
+            </tr>
+        </tbody>
+    </nz-table>
+
+</div>

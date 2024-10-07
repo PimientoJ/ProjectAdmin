@@ -1,0 +1,102 @@
+<nz-layout>
+    <!--MENU-->
+    <nz-sider nzCollapsible nzWidth="200px">
+        <!--LOGO-->
+        <div class="logo">
+            <img class="img-logo" src="../../../assets/logo-udes-sm.png">
+        </div>
+        <!--USUARIO-->
+        <!--<div class="TextName" *ngIf="users">
+            <h3 style="color: #fff">{{users.nombre}}</h3>
+            <h4 style="color: #fff">{{users.rol}}</h4>
+            <hr style="color: #fff">
+        </div>-->
+        <!--MENU-->
+        <ul nz-menu nzTheme="dark" nzMode="inline">
+            <li nz-menu-item routerLink="Home" routerLinkActive="active">
+                <span nz-icon nzType="home" nzTheme="outline"></span>
+                <span>Inicio</span>
+            </li>
+            <!-- <li nz-menu-item routerLink="PropuestaGrado" routerLinkActive="active">
+                <span nz-icon nzType="snippets" nzTheme="outline"></span>
+                <span>Propuesta de Grado</span>
+            </li>-->
+            <li nz-submenu nzTitle="Trabajo de grado" nzIcon="file">
+                <!--Menu de proyecto sde grado etudiante-->
+                <ul>
+                    <li nz-menu-item routerLink="PropuestaGrado" routerLinkActive="active" *ngIf="propuestaGrado">Propuesta de Grado</li>
+                    <li nz-menu-item routerLink="Anteproyecto" routerLinkActive="active" *ngIf="anteproyecto">Anteproyecto</li>
+                    <li nz-menu-item routerLink="Sustentacion" routerLinkActive="active" *ngIf="sustentacion">Sustentación</li>
+                    <li nz-menu-item routerLink="TrabajoFinal" routerLinkActive="active" *ngIf="trabajoFinal">Trabajo Final</li>
+                    <li nz-menu-item routerLink="PropuestaGradoJurado" routerLinkActive="active" *ngIf="notaFinal">Historial</li>
+
+                    <nz-modal [(nzVisible)]="isVisibleModal" nzTitle="NOTA FINAL" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
+                        <ng-container *nzModalContent>
+                            <div>
+                                <p>Mi nota es: 3.6 Aprobado</p>
+                            </div>
+                        </ng-container>
+                    </nz-modal>
+                </ul>
+                <!--Menu de proyecto de grado juez
+                <ul *ngIf="MenuJurado">
+                    <li nz-menu-item routerLink="PropuestaGradoJurado" routerLinkActive="active">Proyectos</li>
+                    <li nz-menu-item routerLink="SustentacionJurado" routerLinkActive="active">Sustentacion</li>
+                </ul>-->
+                <!--Menu de proyecto de grado director/Codirector
+                <ul *ngIf="MenuDirector">
+                    <li nz-menu-item routerLink="PropuestaGradoDirector/Codirector" routerLinkActive="active">Propuesta de grado</li>
+                    <li nz-menu-item routerLink="AnteproyectoDirector/Codirector" routerLinkActive="active">Anteproyecto</li>
+                    <li nz-menu-item routerLink="TrabajoFinalDirector/Codirector" routerLinkActive="active">Proyecto Final</li>
+                </ul>-->
+                <!--Menu de proyecto de grado Admin-->
+                <ul *ngIf="MenuAdmin">
+                    <li nz-menu-item routerLink="PropuestaGradoAdmin" routerLinkActive="active">Proyectos</li>
+                    <!-- <li nz-menu-item routerLink="AnteproyectoAdmin" routerLinkActive="active">Anteproyecto</li>
+                    <li nz-menu-item routerLink="TrabajoFinalAdmin" routerLinkActive="active">Proyecto Final</li> -->
+                </ul>
+            </li>
+            <li nz-menu-item routerLink="Proyectos" routerLinkActive="active" *ngIf="project">
+                <span nz-icon nzType="snippets" nzTheme="outline"></span>
+                <span>Administrar proyectos</span>
+            </li>
+            <li nz-submenu nzTitle="Admin usuarios" nzIcon="team" *ngIf="adminUser">
+                <ul>
+                    <li nz-menu-item routerLink="Users" routerLinkActive="active">Usuarios</li>
+                    <li nz-menu-item routerLink="CreateUser" routerLinkActive="active">Crear usuario</li>
+                </ul>
+            </li>
+            <li nz-menu-item routerLink="Configuration" routerLinkActive="active">
+                <span nz-icon nzType="setting"></span>
+                <span>Configuración</span>
+            </li>
+            <li nz-menu-item (click)="signOut()">
+                <span nz-icon nzType="close"></span>
+                <span>Cerrar sesión</span>
+            </li>
+            <!--Modal de cerrar sesión-->
+            <nz-modal [(nzVisible)]="isVisible" [nzTitle]="modalTitle" [nzContent]="modalContent" [nzFooter]="modalFooter" (nzOnCancel)="handleCancel()">
+                <ng-template #modalTitle class="modal-title">
+                    <span nz-icon class="icons" nzType="exclamation-circle" nzTheme="outline"></span> ¡Cierre de sesión automatica!
+                </ng-template>
+                <ng-template #modalContent>
+                    <p>Si deseas salir haz clic en Cerrar sesión en Cancelar para continuar trabajando</p>
+                </ng-template>
+                <ng-template #modalFooter>
+                    <button nz-button nzType="default" (click)="handleCancel()">Cancelar</button>
+                    <button nz-button nzType="primary" nzDanger (click)="logout()" [nzLoading]="isConfirmLoading">Cerrar sesión</button>
+                </ng-template>
+            </nz-modal>
+        </ul>
+    </nz-sider>
+    <!--CONTENIDO-->
+    <nz-layout>
+        <nz-content>
+            <div class="inner-content">
+                <router-outlet></router-outlet>
+            </div>
+        </nz-content>
+        <!--PIE DE PAGINA-->
+        <nz-footer>Todos los derechos reservados ©2023 Universidad de santander campus Cúcuta</nz-footer>
+    </nz-layout>
+</nz-layout>

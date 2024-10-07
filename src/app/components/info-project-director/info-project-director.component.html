@@ -1,0 +1,152 @@
+<div class="formContenido">
+    <div>
+        <h3 class="from-tittle">NOMBRE DEL PROYECTO</h3>
+        <hr>
+        <br>
+    </div>
+    <div>
+        <h3>Información básica del proyecto:</h3>
+    </div>
+
+    <div class="columna">
+        <div nz-row [nzGutter]="8">
+            <div class="primera" nz-col [nzSpan]="12">
+                <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
+                    <nz-form-item>
+                        <nz-form-label [nzSm]="6" [nzXs]="24">Fecha</nz-form-label>
+                        <nz-form-control [nzSm]="14" [nzXs]="24">
+                            <input nz-input [disabled]="true" id="email" class="registroproyecto" />
+                        </nz-form-control>
+                    </nz-form-item>
+
+                    <nz-form-item>
+                        <nz-form-label [nzSm]="6" [nzXs]="24">Autor</nz-form-label>
+                        <nz-form-control [nzSm]="14" [nzXs]="24">
+                            <input nz-input [disabled]="true" id="email" class="registroproyecto" />
+                        </nz-form-control>
+                    </nz-form-item>
+
+                    <nz-form-item>
+                        <nz-form-label [nzSm]="6" [nzXs]="24">Director</nz-form-label>
+                        <nz-form-control [nzSm]="14" [nzXs]="24">
+                            <input nz-input [disabled]="true" id="email" class="registroproyecto" />
+                        </nz-form-control>
+                    </nz-form-item>
+
+
+                </form>
+            </div>
+
+            <div class="segunda" nz-col [nzSpan]="12">
+                <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
+
+                    <nz-form-item>
+                        <nz-form-label [nzSm]="6" [nzXs]="24">Estado</nz-form-label>
+                        <nz-form-control [nzSm]="14" [nzXs]="24">
+                            <input nz-input [disabled]="true" id="email" class="registroproyecto" />
+                        </nz-form-control>
+                    </nz-form-item>
+
+                    <nz-form-item>
+                        <nz-form-label [nzSm]="6" [nzXs]="24">Autor</nz-form-label>
+                        <nz-form-control [nzSm]="14" [nzXs]="24">
+                            <input nz-input [disabled]="true" id="email" class="registroproyecto" />
+                        </nz-form-control>
+                    </nz-form-item>
+
+                    <nz-form-item>
+                        <nz-form-label [nzSm]="6" [nzXs]="24">Codirector</nz-form-label>
+                        <nz-form-control [nzSm]="14" [nzXs]="24">
+                            <input nz-input [disabled]="true" id="email" class="registroproyecto" />
+                        </nz-form-control>
+                    </nz-form-item>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <h3>Anteproyecto:</h3>
+        <br />
+        <nz-table #editRowTable nzBordered>
+            <thead>
+                <tr>
+                    <th nzWidth="20%">Fecha</th>
+                    <th>Descargar archivo</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{date | date : 'short'}}</td>
+
+                    <td>
+                        <nz-upload [nzFileList]="fileList">
+                            <button nz-button>
+                              <span nz-icon nzType="upload"></span>
+                            </button>
+                        </nz-upload>
+                    </td>
+                </tr>
+            </tbody>
+        </nz-table>
+    </div>
+</div>
+
+<div>
+    <h3>Correcciones sobre el anteproyecto:</h3>
+
+    <br />
+    <button nz-button nzType="primary">Agregar Correcciones</button>
+    <br />
+    <br />
+    <nz-table #editRowTable nzBordered>
+        <thead>
+            <tr>
+                <th nzWidth="20%">Fecha</th>
+                <th>Nombre del archivo</th>
+                <th>Subir archivo</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{date | date : 'short'}}</td>
+                <td></td>
+                <td>
+                    <nz-upload [nzFileList]="fileList">
+                        <button nz-button>
+                              <span nz-icon nzType="upload"></span>
+                            </button>
+                    </nz-upload>
+                </td>
+            </tr>
+        </tbody>
+    </nz-table>
+</div>
+
+
+<div>
+    <h3>Observaciones:</h3>
+
+    <br />
+    <button nz-button nzType="primary">Añadir nueva observación</button>
+    <br />
+    <br />
+    <nz-table #editRowTable nzBordered>
+        <thead>
+            <tr>
+                <th nzWidth="20%">Fecha</th>
+                <th>observación</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{date | date : 'short'}}</td>
+                <td>Descripción de la observación</td>
+
+            </tr>
+        </tbody>
+    </nz-table>
+</div>
+<div>
+</div>
