@@ -8,7 +8,7 @@ import { CookieService } from "ngx-cookie-service";
 })
 export class UsersService {
 
-  url:string = "http://localhost:3500/api";
+  url:string = "https://6c2ac4sju2.execute-api.us-east-2.amazonaws.com/ApiSeira";
  
   constructor(private http: HttpClient, private cookies: CookieService) {}
 
