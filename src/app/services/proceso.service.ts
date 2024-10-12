@@ -9,7 +9,7 @@ import { CookieService } from "ngx-cookie-service";
 export class ProcesoService {
   constructor(private http: HttpClient, private cookies: CookieService) { }
 
-  url:string = "http://localhost:3500/api";
+  url:string = "https://6c2ac4sju2.execute-api.us-east-2.amazonaws.com/ApiSeira";
 
   getProcesos(): Observable<any>{
     return this.http.get<any>(this.url+"/visualizarProceso");
