@@ -10,7 +10,7 @@ export class CalendarService{
 
   constructor(private http: HttpClient, private cookies: CookieService) { }
 
-  url:string = "https://6c2ac4sju2.execute-api.us-east-2.amazonaws.com/ApiSeira";
+  url:string = "http://146.190.62.222:3500/api";
 
   //----------------Datos de la tabla Calendario--------------
 
