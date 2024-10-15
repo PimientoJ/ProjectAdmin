@@ -152,11 +152,11 @@ export class ProposedGradeAdminComponent {
   }
 
   downloadFile(id: string): void {
-    window.open(`http://localhost:3500/api/descargarArchivo/${id}`, '_blank');
+    window.open(`http://146.190.62.222:3500/api/descargarArchivo/${id}`, '_blank');
   }
 
   previewFile(id: string): void {
-    window.open(`http://localhost:3500/api/verArchivo/${id}`, '_blank');
+    window.open(`http://146.190.62.222:3500/api/verArchivo/${id}`, '_blank');
   }
   
   
