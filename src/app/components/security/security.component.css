@@ -7,3 +7,15 @@ nz-card {
 button {
     margin-left: 8px;
 }
+
+.nz-input-group {
+    position: relative;
+}
+
+.nz-input-addon {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    border-left: none;
+}

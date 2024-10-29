@@ -27,37 +27,63 @@ export class SecurityComponent {
 
   idUser: String = '';
 
+  isCurrentPasswordVisible: boolean = false;
+  isNewPasswordVisible: boolean = false;
+  isConfirmPasswordVisible: boolean = false;
+
   constructor(private fb: NonNullableFormBuilder, public userService: UsersService, private modal: NzModalService,) {
     this.validateForm = this.fb.group({
-      password: ['', [Validators.required]],      
+      password: ['', [Validators.required]],
       pass: ['', [Validators.required]],
       confirm: ['', [this.confirmValidator]]
     });
   }
+
+  toggleCurrentPasswordVisibility(): void {
+    this.isCurrentPasswordVisible = !this.isCurrentPasswordVisible;
+  }
+
+  toggleNewPasswordVisibility(): void {
+    this.isNewPasswordVisible = !this.isNewPasswordVisible;
+  }
+
+  toggleConfirmPasswordVisibility(): void {
+    this.isConfirmPasswordVisible = !this.isConfirmPasswordVisible;
+  }
+
   submitForm(): void {
     console.log('submit', this.validateForm.value);
-    const dataPass = { 
+    const dataPass = {
       pass: this.validateForm.value.pass
     };
-     this.idUser = this.userService.getUserLogueId(); 
-    this.userService.putPassword(this.idUser, dataPass).subscribe(data => {        
-       if(data.isOk){          
+    this.idUser = this.userService.getUserLogueId();
+    this.userService.putPassword(this.idUser, dataPass).subscribe(data => {
+      if (data.isOk) {
         this.modal.success({
           nzContent: '¡La contraseña se a modificada exitosamente!'
-          }); 
-          this.validateForm.reset();        
+        });
+        this.validateForm.reset();
       }
-      });
+    });
   }
 
   resetForm(e: MouseEvent): void {
     e.preventDefault();
-    this.validateForm.reset();
+    this.modal.confirm({
+      nzTitle: '¿Estás seguro de que deseas cancelar?',
+      nzOkText: 'Sí',
+      nzCancelText: 'No',
+      nzOnOk: () => {
+        this.validateForm.reset();
+        window.location.reload(); // Recarga la página completamente
+      }
+    });
   }
 
   validateConfirmPassword(): void {
     setTimeout(() => this.validateForm.controls.confirm.updateValueAndValidity());
   }
+
 
   /*userNameAsyncValidator: AsyncValidatorFn = (control: AbstractControl) =>
     new Observable((observer: Observer<ValidationErrors | null>) => {
@@ -81,5 +107,5 @@ export class SecurityComponent {
     return {};
   };
 
- 
+
 }

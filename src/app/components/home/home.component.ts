@@ -294,6 +294,18 @@ eliminarProceso(id: string):void{
           this.obtenerProcesos();
       });
 }
+
+confirmCancel(): void {
+  this.modal.confirm({
+    nzTitle: '¿Estás seguro de que deseas cancelar el proceso?',
+    // nzContent: 'Si cancelas, no se guardaran los cambios.',
+    nzOkText: 'Sí',
+    nzCancelText: 'No',
+    nzOnOk: () => this.closeagg(), // Llama a la función de cierre si elige "Sí"
+  });
+}
+
+
 /*-------------*/
 reset(): void {
   this.searchValue = '';
