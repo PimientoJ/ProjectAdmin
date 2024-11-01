@@ -138,7 +138,7 @@
             (nzOnClose)="closeagg() ">
             <form nz-form *nzDrawerContent [formGroup]="validateFormProcesosCalendario" (ngSubmit)="submitForm()">
                 <nz-form-item>
-                    <nz-form-label [nzSpan]="8" nzRequired>Perido</nz-form-label>
+                    <nz-form-label [nzSpan]="8" nzRequired>Semestre</nz-form-label>
                     <nz-form-control [nzSpan]="18 " nzHasFeedback>
                         <nz-select nzErrorTip="¡Por favor seleccionar un periodo! ">
                             <nz-option *ngFor="let periodo of periodo" [nzValue]="periodo"
@@ -151,20 +151,14 @@
                 <nz-form-item>
                     <nz-form-label [nzSpan]="8" nzRequired>Año</nz-form-label>
                     <nz-form-control [nzSpan]="18 " nzHasFeedback>
-                        <nz-select nzAllowClear nzErrorTip="¡Por favor seleccionar un año! ">
-                            <nz-option *ngFor="let year of years " [nzValue]="year" [nzLabel]="year"></nz-option>
-                        </nz-select>
+                        <nz-date-picker nzMode="year" nzFormat="yyyy" [nzDisabledDate]="disabledDate"></nz-date-picker>
                     </nz-form-control>
                 </nz-form-item>
-                <!-- boton de agregar nuevo procesos-->
-                <div style="float: right;">
-                    <a nz-tooltip nzTooltipTitle="¿Deseas agregar un nuevo proceso?"
-                        (click)="openModalAgregarProceso()"><span nz-icon nzType="plus-circle" nzTheme="outline"></span>
-                    </a>
-                </div>
+
                 <!--Crud del procesos-->
                 <nz-modal [(nzVisible)]="isVisibleAgregarProceos" nzTitle="Agregar un nuevo proceso"
-                    (nzOnCancel)="cancelarAgregarProceso()" (nzOnOk)="aceptarAgregarProceso()">
+                    (nzOnCancel)="cancelarAgregarProceso()" (nzOnOk)="aceptarAgregarProceso()" nzMaskClosable="false"
+                    [nzFooter]="modalFooterProceso">
                     <ng-container *nzModalContent>
                         <form nz-form [formGroup]="validateFormNuevoProceso">
                             <nz-form-item>
@@ -220,15 +214,24 @@
                         </form>
                     </ng-container>
                 </nz-modal>
+                <ng-template #modalFooterProceso>
+                    <button nz-button nzType="primary" (click)="aceptarAgregarProceso()">Aceptar</button>
+                </ng-template>
+
+
+
                 <!--agregar procesos al calendario-->
                 @for (control of listaProcesos; track control; let i = $index) {
-                <nz-form-item>
-                    @if (i === 0) {
-                    <nz-form-label [nzSpan]="8" nzRequired [nzFor]="control.controlInstance">Agregar
-                        proceso</nz-form-label>
-                    }
-
+                <nz-form-item style="display: flex; justify-content: right; margin-top: 20px;">
+                    <!-- @if (i === 0) { -->
+                    <div >
+                        <button nz-button (click)="openModalAgregarProceso()" nzType="dashed">Agregar nuevo
+                            proceso</button>
+                    </div>
+                    <!-- } -->
                 </nz-form-item>
+
+                <!-- para el año -->
                 <nz-form-item>
                     <nz-form-label [nzSpan]="9" nzRequired>Proceso</nz-form-label>
                     <nz-form-control [nzSpan]="18">
@@ -240,6 +243,7 @@
                     <span nz-icon nzType="minus-circle-o" class="icono-retar"
                         (click)="removeField(control, $event)"></span>
                 </nz-form-item>
+                <!-- /*para las fechas* -->
                 <nz-form-item>
                     <nz-form-label [nzSpan]="9" nzRequired>Fecha de Entrega</nz-form-label>
                     <nz-form-control [nzSpan]="18" nzHasFeedback>

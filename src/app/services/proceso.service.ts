@@ -16,7 +16,7 @@ export class ProcesoService {
   }
 
   postProcesos(body: any): Observable<any>{
-    return this.http.post<any>(this.url+"/agregarProcesoNuevo", body);
+    return this.http.post<any>(this.url+"/agregarProcesos", body);
   }
 
   putProceso(idProceso: any, body: any):Observable<any>{

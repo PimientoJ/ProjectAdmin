@@ -36,6 +36,8 @@ export class HomeComponent implements OnInit {
   periodo= ['A', 'B'];
   procesos: any[]=[];
   isVisibleAgregarProceos = false;
+  // isVisibleAgregarPeriodo = false;
+  // isVisibleAgregarYear = false;
   //------//
   searchValue = '';
   visible = false;
@@ -200,6 +202,7 @@ export class HomeComponent implements OnInit {
     this.visibleActualizar = false;
   }
   closeagg(): void {
+    window.location.reload();
     this.visibleAgg = false;
   }
   closeHistorial(): void {
@@ -229,6 +232,9 @@ console.log(idCalendario);
       this.datosProcesos = data;      
       });
 }
+
+
+/*proceso*/
 openModalAgregarProceso(): void{
   this.isVisibleAgregarProceos =true;
 }
@@ -237,7 +243,7 @@ this.isVisibleAgregarProceos=false;
 }
 cancelarAgregarProceso():void{
   this.isVisibleAgregarProceos=false;
-  }
+}
 AgregarProcesoNuevo():void{
   if(this.validateFormNuevoProceso.value.newProceso == ''){
     this.modal.error({

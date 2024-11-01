@@ -1,4 +1,5 @@
 import { LOCALE_ID, NgModule } from '@angular/core';
+// import { NZ_I18N, es_ES } from 'ng-zorro-antd/i18n';
 import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 import { AppRoutingModule } from './app-routing.module';
@@ -95,6 +96,7 @@ const icons: IconDefinition[] = Object.keys(antDesignIcons).map(key => antDesign
   providers: [ UsersService, CookieService,
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},    
     { provide: NZ_I18N, useValue: en_US },
+    // { provide: NZ_I18N, useValue: es_ES },
     { provide: NZ_ICONS, useValue: icons },
     { provide: LOCALE_ID, useValue: 'es-CO'}
   ],
