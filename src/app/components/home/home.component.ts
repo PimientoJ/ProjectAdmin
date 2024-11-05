@@ -50,6 +50,15 @@ export class HomeComponent implements OnInit {
   editCache: { [key: string]:any} = {};
   listOfData = this.procesos;
 
+  //Formulario para crear calendario
+validateFormCalendario: FormGroup<{
+  ano: FormControl<string>;
+  periodo: FormControl<string>;
+}> = this.fb.group({
+  ano: ['', [Validators.required]],
+  periodo: ['', [Validators.required]]
+});
+
   // agregar procesos al calendario
   validateFormProcesosCalendario: FormRecord<
   FormControl<string>> = this.fb.record({});
@@ -208,6 +217,38 @@ export class HomeComponent implements OnInit {
   closeHistorial(): void {
     this.visibleHistorial = false;
   }
+
+// Metodo de agregar un nuevo proceso
+  agregarProcesoNuevo():void{
+    if(this.validateFormNuevoProceso.value.newProceso == ''){
+      this.modal.error({
+        nzContent: '¡Dato no validado!'
+      });}else{
+      const nombreProcesoNuevo = {
+        nombre: this.validateFormNuevoProceso.value.newProceso
+      };
+      this.procesoService.postProcesos(nombreProcesoNuevo).subscribe(data => {
+        if(data.success){
+          this.modal.success({
+            nzContent: '¡Dato registrados con exito!'
+            });
+            this.validateFormNuevoProceso.reset();
+            this.obtenerProcesos();
+        }else{
+          this.modal.info({
+            nzContent: data.msj
+          });
+          this.validateFormNuevoProceso.reset();
+        }
+          
+      });}
+  }
+
+//Crear calendario
+crearcalendario(){
+  
+}
+
  //Mostrar los datos del calendario registrados
  ObtenerDatosCalendario(){
   this.calendarService.getCalendar().subscribe(data => {
