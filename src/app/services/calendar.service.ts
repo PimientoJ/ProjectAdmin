@@ -12,6 +12,11 @@ export class CalendarService{
 
   url:string = "http://146.190.62.222:3500/api";
 
+  //Metodo para crear un calendarios nuevo
+  crearCalendario(data: any): Observable<any>{
+    return this.http.post<any>(this.url+"/registarCalendario", data);
+  }
+
   //----------------Datos de la tabla Calendario--------------
 
   //Métodos Mostrar datos de la tabla calendario
