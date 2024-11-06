@@ -236,7 +236,7 @@ validateFormCalendario: FormGroup<{
             this.obtenerProcesos();
         }else{
           this.modal.info({
-            nzContent: data.msj
+            nzContent: "El proceso ha sido añadido con éxito"
           });
           this.validateFormNuevoProceso.reset();
         }
@@ -278,6 +278,17 @@ console.log(idCalendario);
 /*proceso*/
 openModalAgregarProceso(): void{
   this.isVisibleAgregarProceos =true;
+}
+
+updateModalAgregarProceso(): void {
+  // Limpiar el formulario
+  this.validateFormNuevoProceso.reset();
+  
+  // Obtener datos actualizados, si es necesario
+  this.obtenerProcesos();
+
+  // Abrir el modal
+  this.isVisibleAgregarProceos = true;
 }
 aceptarAgregarProceso():void{
 this.isVisibleAgregarProceos=false;
@@ -338,7 +349,8 @@ eliminarProceso(id: string):void{
           this.modal.success({
           nzContent: '¡Los datos se han eliminado con exito!'
           }); 
-          this.obtenerProcesos();
+          this.updateModalAgregarProceso();
+          // this.obtenerProcesos();
       });
 }
 

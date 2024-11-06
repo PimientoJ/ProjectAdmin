@@ -12,17 +12,17 @@
         </div>
         <div style="position:relative;">
             <!--Año y periodo del calendario-->
-            <div class="text-left">
+            <!-- <div class="text-left">
                 <h3 style="color: red; font-weight: bold; font-family:New Roman" *ngFor="let data of datosCalendario">
                     {{data.periodo}} || Año {{data.year}}
                 </h3>
-            </div>
+            </div> -->
             <!--Botonoes del admin (historial, agregar, modificar)-->
             <div style="float: right;">
-                <div style="float: right;">
+                <!-- <div style="float: right;">
                     <button nz-button nzType="primary" *ngIf="verBotonActualizar"
                         (click)="openActualizar()">Actualizar</button>
-                </div>
+                </div> -->
                 <div style="float: right; ">
                     <button nz-button nzType="primary" *ngIf="verBotonAgg" (click)="openAgg()">Agregar</button>
                 </div>
@@ -50,7 +50,7 @@
                     <th>Fecha de entrega del estudiante</th>
                     <th>Fecha de sesión de comité</th>
                     <th>Fecha de entrega de resultado</th>
-                    <th nzWidth="15%">Acciones</th>
+                    <!-- <th nzWidth="15%">Acciones</th> -->
 
                 </tr>
             </thead>
@@ -61,12 +61,12 @@
                         <td>{{ item.fechaEntrega | date:'longDate' }}</td>
                         <td>{{ item.fechaSesioncomite | date:'longDate' }}</td>
                         <td>{{ item.fechaResultado | date:'longDate' }}</td>
-                        <td>
+                        <!-- <td>
                             <a><span nz-icon nzType="edit " class="icons "></span></a>
                             <a nz-popconfirm nzPopconfirmTitle="¿Está seguro de que desea eliminar? " nzDanger>
                                 <span nz-icon nzType="delete " style="color: red; " class="icons "></span>
                             </a>
-                        </td>
+                        </td> -->
 
                     </ng-container>
                 </tr>
@@ -118,7 +118,7 @@
             </nz-table>
             </td>
             <td>
-                <a (click)="activarCalendario(item._id)"> Activar</a>
+                <a (click)="activarCalendario(item._id)" (click)="openActualizar()"> Activar</a>
             </td>
             </tr>
             </tbody>
@@ -167,9 +167,9 @@
                 </nz-form-item>
 
                  <!-- boton de agregar nuevo procesos-->
-                 <div style="float: right;">
+                 <!-- <div style="float: right;">
                     <a nz-tooltip nzTooltipTitle="¿Deseas agregar un nuevo proceso?" (click)="openModalAgregarProceso()"><span nz-icon nzType="plus-circle" nzTheme="outline" ></span> </a>
-                </div>
+                </div> -->
 
                 <!--Crud del procesos-->
                 <nz-modal [(nzVisible)]="isVisibleAgregarProceos" nzTitle="Agregar un nuevo proceso"
@@ -191,7 +191,7 @@
                                     <tr>
                                         <th>N°</th>
                                         <th nzWidth="40%">Nombre</th>
-                                        <th>Acciones</th>
+                                        <!-- <th>Acciones</th> -->
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -200,7 +200,7 @@
                                         <td> {{data.nombre}} </td>
                                         <td>
                                             <!--  <a (click)="editarProceso(data._id)"><span nz-icon nzType="edit" nzTheme="outline"></span></a>-->
-                                            <a (nzOnConfirm)="eliminarProceso(data._id)" nz-popconfirm
+                                            <a (nzOnConfirm)="eliminarProceso(data._id)"  nz-popconfirm
                                                 nzPopconfirmTitle="¿Estás seguro que desear eliminar el proceso?"><span
                                                     nz-icon nzType="delete" nzTheme="outline"></span></a>
                                         </td>
