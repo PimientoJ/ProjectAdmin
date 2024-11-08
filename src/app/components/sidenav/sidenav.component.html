@@ -75,7 +75,7 @@
                 <span>Cerrar sesión</span>
             </li>
             <!--Modal de cerrar sesión-->
-            <nz-modal [(nzVisible)]="isVisible" [nzTitle]="modalTitle" [nzContent]="modalContent" [nzFooter]="modalFooter" (nzOnCancel)="handleCancel()">
+            <nz-modal [(nzVisible)]="isVisible" [nzTitle]="modalTitle" [nzContent]="modalContent" [nzFooter]="modalFooter" (nzOnCancel)="handleCancelOut()">
                 <ng-template #modalTitle class="modal-title">
                     <span nz-icon class="icons" nzType="exclamation-circle" nzTheme="outline"></span> ¡Cierre de sesión automatica!
                 </ng-template>
@@ -83,7 +83,7 @@
                     <p>Si deseas salir haz clic en Cerrar sesión en Cancelar para continuar trabajando</p>
                 </ng-template>
                 <ng-template #modalFooter>
-                    <button nz-button nzType="default" (click)="handleCancel()">Cancelar</button>
+                    <button nz-button nzType="default" (click)="handleCancelOut()">Cancelar</button>
                     <button nz-button nzType="primary" nzDanger (click)="logout()" [nzLoading]="isConfirmLoading">Cerrar sesión</button>
                 </ng-template>
             </nz-modal>

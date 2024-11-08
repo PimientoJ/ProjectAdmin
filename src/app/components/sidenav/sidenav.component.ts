@@ -137,6 +137,13 @@ handleCancel(): void {
   console.log('Button cancel clicked!');
   this.isVisibleModal = false;
 }
+
+
+handleCancelOut(): void {
+  console.log('Button cancel clicked!');
+  this.isVisible= false;
+}
+
 ngOnInit(): void {
   this.getUserLogged();
   

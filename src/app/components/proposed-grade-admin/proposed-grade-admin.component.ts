@@ -105,8 +105,8 @@ export class ProposedGradeAdminComponent {
       console.log("resultado", data);
         if (data.success) {
           this.modal.success({
-            nzTitle: '¡Registro con exito!',
-            nzContent: 'El usuaio se ha creado con exito'
+            nzTitle: '¡Proyecto actualizado!',
+            nzContent: 'Se actualizo con éxito el proyecto'
           });
           this.llenardatos();
         }

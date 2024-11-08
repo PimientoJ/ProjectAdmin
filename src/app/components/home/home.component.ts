@@ -219,30 +219,30 @@ validateFormCalendario: FormGroup<{
   }
 
 // Metodo de agregar un nuevo proceso
-  agregarProcesoNuevo():void{
-    if(this.validateFormNuevoProceso.value.newProceso == ''){
-      this.modal.error({
-        nzContent: '¡Dato no validado!'
-      });}else{
-      const nombreProcesoNuevo = {
-        nombre: this.validateFormNuevoProceso.value.newProceso
-      };
-      this.procesoService.postProcesos(nombreProcesoNuevo).subscribe(data => {
-        if(data.success){
-          this.modal.success({
-            nzContent: '¡Dato registrados con exito!'
-            });
-            this.validateFormNuevoProceso.reset();
-            this.obtenerProcesos();
-        }else{
-          this.modal.info({
-            nzContent: "El proceso ha sido añadido con éxito"
-          });
-          this.validateFormNuevoProceso.reset();
-        }
+  // agregarProcesoNuevo():void{
+  //   if(this.validateFormNuevoProceso.value.newProceso == ''){
+  //     this.modal.error({
+  //       nzContent: '¡Dato no validado!'
+  //     });}else{
+  //     const nombreProcesoNuevo = {
+  //       nombre: this.validateFormNuevoProceso.value.newProceso
+  //     };
+  //     this.procesoService.postProcesos(nombreProcesoNuevo).subscribe(data => {
+  //       if(data.success){
+  //         this.modal.success({
+  //           nzContent: '¡Dato registrados con exito!'
+  //           });
+  //           this.validateFormNuevoProceso.reset();
+  //           this.obtenerProcesos();
+  //       }else{
+  //         this.modal.info({
+  //           nzContent: "El proceso ha sido añadido con éxito"
+  //         });
+  //         this.validateFormNuevoProceso.reset();
+  //       }
           
-      });}
-  }
+  //     });}
+  // }
 
 //Crear calendario
 crearcalendario(){
@@ -313,7 +313,7 @@ AgregarProcesoNuevo():void{
           this.obtenerProcesos();
       }else{
         this.modal.info({
-          nzContent: data.msj
+          nzContent:  "El proceso ha sido añadido con éxito"
         });
         this.validateFormNuevoProceso.reset();
       }

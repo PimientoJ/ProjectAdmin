@@ -18,12 +18,12 @@
         <thead>
             <tr>
                 <th class="proyecto">Título del proyecto</th>
-                <th>Descarga</th>
-                <th>Ver</th>
-                <th>Proceso</th>
-                <th>Estado</th>
-                <th>Nota</th>
-                <th>Acción</th>
+                <th class="proyecto">Descarga</th>
+                <th class="proyecto">Ver</th>
+                <th class="proyecto">Proceso</th>
+                <th class="proyecto">Estado</th>
+                <th class="proyecto">Nota</th>
+                <th class="proyecto">Acción</th>
 
             </tr>
         </thead>
@@ -38,9 +38,9 @@
                     <td>
                         <span nz-icon nzType="eye" nzTheme="outline" style="color: green; margin-left: 40%;" (click)="previewFile(project._id)"></span>
                     </td>
-                    <td>{{ project.proceso }}</td>
-                    <td>{{ project.estadoProceso }}</td>
-                    <td>{{ project.nota }}</td>
+                    <td class="proyecto">{{ project.proceso }}</td>
+                    <td class="proyecto">{{ project.estadoProceso }}</td>
+                    <td class="proyecto">{{ project.nota }}</td>
                     <td>
                         <span nz-icon nzType="file-done" nzTheme="outline" (click)="showModal(project._id)" style="color: rgb(255, 85, 0); margin-left: 40%;"></span>
                         <nz-modal [(nzVisible)]="isVisible" [nzTitle]="projectId?.titulo" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
