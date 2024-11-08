@@ -46,10 +46,10 @@
         <nz-table>
             <thead>
                 <tr class="encabezadoTabla ">
-                    <th>Proceso</th>
-                    <th>Fecha de entrega del estudiante</th>
-                    <th>Fecha de sesión de comité</th>
-                    <th>Fecha de entrega de resultado</th>
+                    <th class="proyecto">Proceso</th>
+                    <th class="proyecto">Fecha de entrega del estudiante</th>
+                    <th class="proyecto">Fecha de sesión de comité</th>
+                    <th class="proyecto">Fecha de entrega de resultado</th>
                     <!-- <th nzWidth="15%">Acciones</th> -->
 
                 </tr>
@@ -166,8 +166,8 @@
                     </nz-form-control>
                 </nz-form-item>
 
-                 <!-- boton de agregar nuevo procesos-->
-                 <!-- <div style="float: right;">
+                <!-- boton de agregar nuevo procesos-->
+                <!-- <div style="float: right;">
                     <a nz-tooltip nzTooltipTitle="¿Deseas agregar un nuevo proceso?" (click)="openModalAgregarProceso()"><span nz-icon nzType="plus-circle" nzTheme="outline" ></span> </a>
                 </div> -->
 
@@ -200,7 +200,7 @@
                                         <td> {{data.nombre}} </td>
                                         <td>
                                             <!--  <a (click)="editarProceso(data._id)"><span nz-icon nzType="edit" nzTheme="outline"></span></a>-->
-                                            <a (nzOnConfirm)="eliminarProceso(data._id)"  nz-popconfirm
+                                            <a (nzOnConfirm)="eliminarProceso(data._id)" nz-popconfirm
                                                 nzPopconfirmTitle="¿Estás seguro que desear eliminar el proceso?"><span
                                                     nz-icon nzType="delete" nzTheme="outline"></span></a>
                                         </td>
@@ -240,7 +240,7 @@
                 @for (control of listaProcesos; track control; let i = $index) {
                 <nz-form-item style="display: flex; justify-content: right; margin-top: 20px;">
                     <!-- @if (i === 0) { -->
-                    <div >
+                    <div>
                         <button nz-button (click)="openModalAgregarProceso()" nzType="dashed">Agregar nuevo
                             proceso</button>
                     </div>
