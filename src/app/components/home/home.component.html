@@ -166,6 +166,65 @@
                   </nz-form-control>
                 </nz-form-item>
               
+                 <!-- boton de agregar nuevo procesos-->
+                 <div style="float: right;">
+                    <a nz-tooltip nzTooltipTitle="¿Deseas agregar un nuevo proceso?" (click)="openModalAgregarProceso()"><span nz-icon nzType="plus-circle" nzTheme="outline" ></span> </a>
+                </div>
+                <!--Crud del procesos-->
+                <br>
+                <br>
+                <nz-modal [(nzVisible)]="isVisibleAgregarProceos" nzTitle="Agregar un nuevo proceso" (nzOnCancel)="cancelarAgregarProceso()" (nzOnOk)="aceptarAgregarProceso()">
+                    <ng-container *nzModalContent>
+                        <form nz-form [formGroup]="validateFormNuevoProceso">
+                            <nz-form-item>
+                                <nz-form-label [nzSpan]="4" nzRequired>Proceso</nz-form-label>
+                                <nz-form-control [nzSpan]="15" style="margin-right: 10px;">
+                                    <input nz-input formControlName="newProceso" placeholder="Ingrese el nombre del proceso que desea agregar" />
+                                </nz-form-control>
+                                <button nz-button nzType="primary" style="float: right;" (click)="AgregarProcesoNuevo();">Agregar</button>
+                            </nz-form-item>
+                            <nz-table #editRowTable nzBordered [nzData]="procesos">
+                                <thead>
+                                    <tr>
+                                        <th>N°</th>
+                                        <th nzWidth="40%">Nombre</th>
+                                        <th>Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let data of  editRowTable.data; let a=index">
+                                        <td>{{a + 1}}</td>
+                                        <td> {{data.nombre}} </td>
+                                        <td>
+                                            <!--  <a (click)="editarProceso(data._id)"><span nz-icon nzType="edit" nzTheme="outline"></span></a>-->
+                                            <a (nzOnConfirm)="eliminarProceso(data._id)" nz-popconfirm nzPopconfirmTitle="¿Estás seguro que desear eliminar el proceso?"><span nz-icon nzType="delete" nzTheme="outline"></span></a>
+                                        </td>
+                                        <!--   <ng-container *ngIf="!editCache[data._id].edit; else nameInputTpl">-->
+                                        <!--*ngIf="!editCache[data._id].edit; else nameInputTpl"-->
+                                        <!--     {{data.nombre}}
+                                        </ng-container>
+                                        <ng-template #nameInputTpl>
+                                            <input type="text" nz-input [(ngModel)]="editCache[data._id].data.nombre" />
+                                        </ng-template>
+                                    </td>
+                                    <td>
+                                        <div class="editable-row-operations">
+                                            <ng-container *ngIf="!editCache[data._id].edit; else saveTpl">
+                                                <a (click)="editarProceso(data._id)"><span nz-icon nzType="edit" nzTheme="outline"></span></a>
+                                                <a (nzOnConfirm)="eliminarProceso(data._id)" nz-popconfirm nzPopconfirmTitle="¿Estas seguro que desear eliminar el proceso?"><span nz-icon nzType="delete" nzTheme="outline"></span></a>
+                                            </ng-container>
+                                            <ng-template #saveTpl>
+                                                <a (click)="saveEdit(data._id)">Save</a>
+                                                <a nz-popconfirm nzTitle="Sure to cancel?" (nzOnConfirm)="cancelEdit(data._id)">Cancel</a>
+                                            </ng-template>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>-->
+                            </nz-table>
+                        </form>
+                    </ng-container>
+                </nz-modal>
                 <!-- Campos dinámicos para procesos -->
                 <div formArrayName="procesos">
                   <div *ngFor="let control of procesosControls; let i = index" [formGroupName]="i">
