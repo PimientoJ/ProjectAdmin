@@ -148,162 +148,83 @@
             [nzVisible]="visibleAgg " nzTitle="Nuevo registro de calendario " [nzFooter]="footerTplProceso "
             (nzOnClose)="closeagg() ">
             <form nz-form *nzDrawerContent [formGroup]="validateFormProcesosCalendario" (ngSubmit)="submitForm()">
+                <!-- Semestre -->
                 <nz-form-item>
-                    <nz-form-label [nzSpan]="8" nzRequired>Semestre</nz-form-label>
-                    <nz-form-control [nzSpan]="18 " nzHasFeedback>
-                        <nz-select nzErrorTip="¡Por favor seleccionar un periodo! ">
-                            <nz-option *ngFor="let periodo of periodo" [nzValue]="periodo"
-                                [nzLabel]="periodo"></nz-option>
+                  <nz-form-label [nzSpan]="8" nzRequired>Semestre</nz-form-label>
+                  <nz-form-control [nzSpan]="18" nzHasFeedback>
+                    <nz-select formControlName="semestre" nzErrorTip="¡Por favor seleccionar un periodo!">
+                      <nz-option *ngFor="let periodo of periodo" [nzValue]="periodo" [nzLabel]="periodo"></nz-option>
+                    </nz-select>
+                  </nz-form-control>
+                </nz-form-item>
+              
+                <!-- Año -->
+                <nz-form-item>
+                  <nz-form-label [nzSpan]="8" nzRequired>Año</nz-form-label>
+                  <nz-form-control [nzSpan]="18" nzHasFeedback>
+                    <nz-date-picker formControlName="año" nzMode="year" nzFormat="yyyy" [nzDisabledDate]="disabledDate"></nz-date-picker>
+                  </nz-form-control>
+                </nz-form-item>
+              
+                <!-- Campos dinámicos para procesos -->
+                <div formArrayName="procesos">
+                  <div *ngFor="let control of procesosControls; let i = index" [formGroupName]="i">
+                    <nz-form-item>
+                      <nz-form-label [nzSpan]="9" nzRequired>Proceso</nz-form-label>
+                      <nz-form-control [nzSpan]="18">
+                        <nz-select formControlName="procesoId" nzAllowClear nzErrorTip="¡Por favor seleccionar un proceso!">
+                          <nz-option *ngFor="let proceso of procesos" [nzValue]="proceso._id" [nzLabel]="proceso.nombre"></nz-option>
                         </nz-select>
-                    </nz-form-control>
-                </nz-form-item>
-
-
+                      </nz-form-control>
+                      <span nz-icon nzType="minus-circle-o" class="icono-retar" (click)="removeField(i)"></span>
+                    </nz-form-item>
+              
+                    <!-- Fecha de Entrega -->
+                    <nz-form-item>
+                      <nz-form-label [nzSpan]="9" nzRequired>Fecha de Entrega</nz-form-label>
+                      <nz-form-control [nzSpan]="18" nzHasFeedback>
+                        <nz-date-picker formControlName="fechaEntrega" [nzDisabledDate]="disabledDate"></nz-date-picker>
+                      </nz-form-control>
+                    </nz-form-item>
+              
+                    <!-- Fecha de sesión de comité -->
+                    <nz-form-item>
+                      <nz-form-label [nzSpan]="9" nzRequired>Fecha de sesión de comité</nz-form-label>
+                      <nz-form-control [nzSpan]="18" nzHasFeedback>
+                        <nz-date-picker formControlName="fechaSesionComite" [nzDisabledDate]="disabledDate"></nz-date-picker>
+                      </nz-form-control>
+                    </nz-form-item>
+              
+                    <!-- Fecha de entrega de resultados -->
+                    <nz-form-item>
+                      <nz-form-label [nzSpan]="9" nzRequired>Fecha de entrega de resultados</nz-form-label>
+                      <nz-form-control [nzSpan]="18" nzHasFeedback>
+                        <nz-date-picker formControlName="fechaEntregaResultados" [nzDisabledDate]="disabledDate"></nz-date-picker>
+                      </nz-form-control>
+                    </nz-form-item>
+                  </div>
+                </div>
+              
+                <!-- Botón para agregar un nuevo proceso -->
                 <nz-form-item>
-                    <nz-form-label [nzSpan]="8" nzRequired>Año</nz-form-label>
-                    <nz-form-control [nzSpan]="18 " nzHasFeedback>
-                        <nz-date-picker nzMode="year" nzFormat="yyyy" [nzDisabledDate]="disabledDate"></nz-date-picker>
-                    </nz-form-control>
+                  <nz-form-control [nzXs]="{ span: 24, offset: 0 }" [nzSm]="{ span: 20, offset: 4 }">
+                    <button nz-button nzType="dashed" class="add-button" (click)="addField($event)">
+                      <span nz-icon nzType="plus"></span>
+                      Agregar nuevo campo
+                    </button>
+                  </nz-form-control>
                 </nz-form-item>
-
-                <!-- boton de agregar nuevo procesos-->
-                <!-- <div style="float: right;">
-                    <a nz-tooltip nzTooltipTitle="¿Deseas agregar un nuevo proceso?" (click)="openModalAgregarProceso()"><span nz-icon nzType="plus-circle" nzTheme="outline" ></span> </a>
-                </div> -->
-
-                <!--Crud del procesos-->
-                <nz-modal [(nzVisible)]="isVisibleAgregarProceos" nzTitle="Agregar un nuevo proceso"
-                    (nzOnCancel)="cancelarAgregarProceso()" (nzOnOk)="aceptarAgregarProceso()" nzMaskClosable="false"
-                    [nzFooter]="modalFooterProceso">
-                    <ng-container *nzModalContent>
-                        <form nz-form [formGroup]="validateFormNuevoProceso">
-                            <nz-form-item>
-                                <nz-form-label [nzSpan]="4" nzRequired>Proceso</nz-form-label>
-                                <nz-form-control [nzSpan]="15" style="margin-right: 10px;">
-                                    <input nz-input formControlName="newProceso"
-                                        placeholder="Ingrese el nombre del proceso que desea agregar" />
-                                </nz-form-control>
-                                <button nz-button nzType="primary" style="float: right;"
-                                    (click)="AgregarProcesoNuevo();">Agregar</button>
-                            </nz-form-item>
-                            <nz-table #editRowTable nzBordered [nzData]="procesos">
-                                <thead>
-                                    <tr>
-                                        <th>N°</th>
-                                        <th nzWidth="40%">Nombre</th>
-                                        <!-- <th>Acciones</th> -->
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr *ngFor="let data of  editRowTable.data; let a=index">
-                                        <td>{{a + 1}}</td>
-                                        <td> {{data.nombre}} </td>
-                                        <td>
-                                            <!--  <a (click)="editarProceso(data._id)"><span nz-icon nzType="edit" nzTheme="outline"></span></a>-->
-                                            <a (nzOnConfirm)="eliminarProceso(data._id)" nz-popconfirm
-                                                nzPopconfirmTitle="¿Estás seguro que desear eliminar el proceso?"><span
-                                                    nz-icon nzType="delete" nzTheme="outline"></span></a>
-                                        </td>
-                                        <!--   <ng-container *ngIf="!editCache[data._id].edit; else nameInputTpl">-->
-                                        <!--*ngIf="!editCache[data._id].edit; else nameInputTpl"-->
-                                        <!--     {{data.nombre}}
-                                        </ng-container>
-                                        <ng-template #nameInputTpl>
-                                            <input type="text" nz-input [(ngModel)]="editCache[data._id].data.nombre" />
-                                        </ng-template>
-                                    </td>
-                                    <td>
-                                        <div class="editable-row-operations">
-                                            <ng-container *ngIf="!editCache[data._id].edit; else saveTpl">
-                                                <a (click)="editarProceso(data._id)"><span nz-icon nzType="edit" nzTheme="outline"></span></a>
-                                                <a (nzOnConfirm)="eliminarProceso(data._id)" nz-popconfirm nzPopconfirmTitle="¿Estas seguro que desear eliminar el proceso?"><span nz-icon nzType="delete" nzTheme="outline"></span></a>
-                                            </ng-container>
-                                            <ng-template #saveTpl>
-                                                <a (click)="saveEdit(data._id)">Save</a>
-                                                <a nz-popconfirm nzTitle="Sure to cancel?" (nzOnConfirm)="cancelEdit(data._id)">Cancel</a>
-                                            </ng-template>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </tbody>-->
-                            </nz-table>
-                        </form>
-                    </ng-container>
-                </nz-modal>
-                <ng-template #modalFooterProceso>
-                    <button nz-button nzType="primary" (click)="aceptarAgregarProceso()">Aceptar</button>
-                </ng-template>
-
-
-
-                <!--agregar procesos al calendario-->
-                @for (control of listaProcesos; track control; let i = $index) {
-                <nz-form-item style="display: flex; justify-content: right; margin-top: 20px;">
-                    <!-- @if (i === 0) { -->
-                    <div>
-                        <button nz-button (click)="openModalAgregarProceso()" nzType="dashed">Agregar nuevo
-                            proceso</button>
-                    </div>
-                    <!-- } -->
-                </nz-form-item>
-
-                <!-- para el año -->
+              
+                <!-- Botón para enviar el formulario -->
                 <nz-form-item>
-                    <nz-form-label [nzSpan]="9" nzRequired>Proceso</nz-form-label>
-                    <nz-form-control [nzSpan]="18">
-                        <nz-select nzAllowClear nzErrorTip="¡Por favor seleccionar un proceso! ">
-                            <nz-option *ngFor="let proceso of procesos" nzValue="{{proceso._id}}"
-                                nzLabel="{{proceso.nombre}}"></nz-option>
-                        </nz-select>
-                    </nz-form-control>
-                    <span nz-icon nzType="minus-circle-o" class="icono-retar"
-                        (click)="removeField(control, $event)"></span>
+                  <nz-form-control [nzXs]="{ span: 24, offset: 0 }" [nzSm]="{ span: 20, offset: 4 }">
+                    <button nz-button nzType="primary" [disabled]="!validateFormProcesosCalendario.valid">Guardar</button>
+                </nz-form-control>
                 </nz-form-item>
-                <!-- /*para las fechas* -->
-                <nz-form-item>
-                    <nz-form-label [nzSpan]="9" nzRequired>Fecha de Entrega</nz-form-label>
-                    <nz-form-control [nzSpan]="18" nzHasFeedback>
-                        <nz-date-picker [nzDisabledDate]="disabledDate"></nz-date-picker>
-                    </nz-form-control>
-                </nz-form-item>
-                <nz-form-item>
-                    <nz-form-label [nzSpan]="9" nzRequired>Fecha de sesión de comité</nz-form-label>
-                    <nz-form-control [nzSpan]="18 " nzHasFeedback>
-                        <nz-date-picker [nzDisabledDate]="disabledDate"></nz-date-picker>
-                    </nz-form-control>
-                </nz-form-item>
-                <nz-form-item>
-                    <nz-form-label [nzSpan]="9" nzRequired>Fecha de entrega de resultados</nz-form-label>
-                    <nz-form-control [nzSpan]="18" nzHasFeedback>
-                        <nz-date-picker [nzDisabledDate]="disabledDate"></nz-date-picker>
-                    </nz-form-control>
-                </nz-form-item>
-                <!--  <nz-form-control [nzXs]="24" [nzSm]="20" [nzOffset]="i === 0 ? 0 : 4" nzErrorTip="Please input passenger's name or delete this field.">
-                    <input class="passenger-input" nz-input placeholder="placeholder" [attr.id]="control.id" [formControlName]="control.controlInstance" />
-
-                </nz-form-control>-->
-
-                <hr>
-                <br> }
-
-                <nz-form-item>
-                    <nz-form-control [nzXs]="{ span: 24, offset: 0 }" [nzSm]="{ span: 20, offset: 4 }">
-                        <button nz-button nzType="dashed" class="add-button" (click)="addField($event)">
-                            <span nz-icon nzType="plus"></span>
-                            Agregar nuevo campo
-                        </button>
-                    </nz-form-control>
-                </nz-form-item>
-                <nz-form-item>
-                    <!-- <nz-form-control [nzXs]="{ span: 24, offset: 0 }" [nzSm]="{ span: 20, offset: 4 }">
-                        <button nz-button nzType="primary">Guardar</button>
-                    </nz-form-control> -->
-                </nz-form-item>
-            </form>
-            <ng-template #footerTplProceso>
+              </form>
+           <ng-template #footerTplProceso>
                 <div style="float: right ">
-                    <button nz-button nzType="primary">Guardar</button>
-                    <button nz-button (click)="confirmCancel()">Cancelar</button>
+                    
                 </div>
             </ng-template>
         </nz-drawer>

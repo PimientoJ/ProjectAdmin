@@ -15,6 +15,10 @@ export class ProcesoService {
     return this.http.get<any>(this.url+"/visualizarProceso");
   }
 
+  getProceso(idProceso: any): Observable<any>{
+    return this.http.get<any>(this.url+"/consultarProceso/"+idProceso);
+  }
+
   postProcesos(body: any): Observable<any>{
     return this.http.post<any>(this.url+"/agregarProcesoNuevo", body);
   }

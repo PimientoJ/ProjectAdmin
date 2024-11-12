@@ -3,10 +3,12 @@ import { CalendarService } from 'src/app/services/calendar.service';
 import { ProcesoService } from 'src/app/services/proceso.service';
 import { UsersService } from 'src/app/services/users.service';
 import { Router } from '@angular/router';
+import { firstValueFrom } from 'rxjs';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import {
   FormControl,
   FormGroup,
+  FormArray,
   FormRecord,
   NonNullableFormBuilder,
   ValidatorFn,
@@ -52,57 +54,140 @@ export class HomeComponent implements OnInit {
 
   //Formulario para crear calendario
 validateFormCalendario: FormGroup<{
-  ano: FormControl<string>;
-  periodo: FormControl<string>;
+  anio: FormControl<string>;
+  semestre: FormControl<string>;
 }> = this.fb.group({
-  ano: ['', [Validators.required]],
-  periodo: ['', [Validators.required]]
+  anio: ['', [Validators.required]],
+  semestre: ['', [Validators.required]]
 });
 
-  // agregar procesos al calendario
-  validateFormProcesosCalendario: FormRecord<
-  FormControl<string>> = this.fb.record({});
-  listaProcesos: Array<{ id: number; controlInstance: string }> = [];
+ // Formulario principal
+ validateFormProcesosCalendario: FormGroup;
 
-  addField(e?: MouseEvent): void {
+ // Lista de procesos
+ listaProcesos: Array<{ id: number; controlInstance: string }> = [];
+
+
+   // Método para agregar un nuevo campo dinámico
+   addField(e?: MouseEvent): void {
     e?.preventDefault();
 
     const id = this.listaProcesos.length > 0 ? this.listaProcesos[this.listaProcesos.length - 1].id + 1 : 0;
 
+    // Agregar un nuevo proceso a la lista
     const control = {
       id,
-      controlInstance: `passenger${id}`
+      controlInstance: `process${id}`
     };
-    const index = this.listaProcesos.push(control);
-    console.log(this.listaProcesos[this.listaProcesos.length - 1]);
-    this.validateFormProcesosCalendario.addControl(
-      this.listaProcesos[index - 1].controlInstance,
-      this.fb.control('', Validators.required)
+    this.listaProcesos.push(control);
+
+    // Crear un nuevo grupo de controles para el proceso
+    (this.validateFormProcesosCalendario.get('procesos') as FormArray).push(
+      this.fb.group({
+        procesoId: ['', Validators.required], // Campo para seleccionar un proceso
+        fechaEntrega: ['', Validators.required], // Fecha de entrega
+        fechaSesionComite: ['', Validators.required], // Fecha de sesión de comité
+        fechaEntregaResultados: ['', Validators.required] // Fecha de entrega de resultados
+      })
     );
   }
 
-  removeField(i: { id: number; controlInstance: string }, e: MouseEvent): void {
-    e.preventDefault();
-    if (this.listaProcesos.length > 1) {
-      const index = this.listaProcesos.indexOf(i);
-      this.listaProcesos.splice(index, 1);
-      console.log(this.listaProcesos);
-      this.validateFormProcesosCalendario.removeControl(i.controlInstance);
+  // Método para eliminar un campo de proceso
+  removeField(index: number): void {
+    (this.validateFormProcesosCalendario.get('procesos') as FormArray).removeAt(index);
+    this.listaProcesos.splice(index, 1); // Eliminar también de la lista de procesos
+  }
+
+  // Método para obtener los controles del FormArray
+  get procesosControls() {
+    return (this.validateFormProcesosCalendario.get('procesos') as FormArray).controls;
+  }
+
+  // Método de submit para el formulario
+  submitForm(): void {
+    if (this.validateFormProcesosCalendario.valid) {
+      console.log('Formulario válido:', this.validateFormProcesosCalendario.value);
+      this.guardarNuevoCalendario();
+    } else {
+      console.log('Formulario inválido');
+      // Marcar todos los controles como tocados
+      this.validateFormProcesosCalendario.markAllAsTouched();
     }
   }
 
-  submitForm(): void {
-    if (this.validateFormProcesosCalendario.valid) {
-      console.log('submit', this.validateFormProcesosCalendario.value);
-    } else {
-      Object.values(this.validateFormProcesosCalendario.controls).forEach(control => {
-        if (control.invalid) {
-          control.markAsDirty();
-          control.updateValueAndValidity({ onlySelf: true });
+
+  async guardarNuevoCalendario() {
+    const periodo = this.validateFormProcesosCalendario.value.semestre;
+    const añoSeleccionado = this.validateFormProcesosCalendario.value.año;
+    const año = añoSeleccionado ? añoSeleccionado.getFullYear() : null;
+    const procesos = await this.transformarProcesos();
+
+    const data = {
+      periodo: periodo,
+      año: año,
+      proceso: procesos
+    };
+
+    this.calendarService.crearCalendario(data).subscribe({
+      next: (response) => {
+        // Si la respuesta es exitosa, muestra el mensaje de éxito
+        if (response.success) {
+          this.modal.success({
+            nzContent: '¡Datos registrados con éxito!'
+          });
+          this.validateFormProcesosCalendario.reset();
+          this.obtenerProcesos();
+        } else {
+          // Si no hay éxito, muestra un mensaje informativo
+          this.modal.info({
+            nzContent: response.msj || 'Hubo un problema al registrar los datos.'
+          });
+          this.validateFormProcesosCalendario.reset();
         }
-      });
-    }
+      },
+      error: (err) => {
+        // Si hay un error en la solicitud HTTP (por ejemplo, error 500)
+        console.error('Error al crear calendario:', err); // Imprime el error en la consola para debug
+        this.modal.error({
+          nzTitle: 'Error',
+          nzContent: err.error?.msj || 'Hubo un error al intentar registrar los datos. Intenta nuevamente más tarde.'
+        });
+      }
+    });
+    
+    console.log(año); // Esto imprimirá solo el año (por ejemplo, 2026)
+
   }
+
+  async transformarProcesos() {
+    const proceso = this.validateFormProcesosCalendario.value.procesos;
+  
+    // Creamos un array de promesas para obtener los datos de los procesos
+    const procesosTransformados = await Promise.all(proceso.map(async (item: any) => {
+      try {
+        // Usamos firstValueFrom en lugar de toPromise
+        const procesoInfo = await firstValueFrom(this.procesoService.getProceso(item.procesoId));
+  
+        // Transformamos la información obtenida
+        return {
+          nombre: procesoInfo.nombre,
+          fechaEntrega: item.fechaEntrega,
+          fechaSesioncomite: item.fechaSesionComite,
+          fechaResultado: item.fechaEntregaResultados
+        };
+      } catch (error) {
+        console.error('Error al obtener el proceso:', error);
+        return null; // Si hay error, retornamos null o puedes manejar el error de otra manera
+      }
+    }));
+  
+    // Filtramos los procesos nulos (en caso de error en alguna petición)
+    const procesosValidados = procesosTransformados.filter(proceso => proceso !== null);
+  
+    console.log(procesosValidados);
+    return procesosValidados;  // Aquí retornamos el array con los procesos transformados
+  }
+  
   //fin de agregar procesos al calendario
 
   //constructor
@@ -123,6 +208,12 @@ validateFormCalendario: FormGroup<{
       } 
     this.validateFormNuevoProceso=this.fb.group({
         newProceso: ['', [Validators.required]]
+    });
+
+    this.validateFormProcesosCalendario = this.fb.group({
+      semestre: ['', Validators.required],
+      año: ['', Validators.required],
+      procesos: this.fb.array([]) // Aquí usas FormArray para los campos dinámicos
     });
     }
 

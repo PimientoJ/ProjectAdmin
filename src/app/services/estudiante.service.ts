@@ -8,7 +8,7 @@ import { CookieService } from "ngx-cookie-service";
 })
 export class EstudianteService {
 
-  url:string = "http://146.190.62.222:3500/api";
+  url:string = "http://localhost:3500/api";
  
   constructor(private http: HttpClient, private cookies: CookieService) { }
 
@@ -21,6 +21,6 @@ export class EstudianteService {
 
 
  /* guardarProyecto(projectData: any): Observable<any>{
-    return this.http.post<any>("http://localhost:3500/api/registarProyecto", projectData);
+    return this.http.post<any>("http://146.190.62.222:3500/api/registarProyecto", projectData);
   }*/
 }
