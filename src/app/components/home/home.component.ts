@@ -226,11 +226,44 @@ validateFormCalendario: FormGroup<{
      
    }
 
+  //  onFechaEntregaChange(date: Date): void {
+  //   if (date) {
+  //     // Add 1 day to the selected fechaEntrega to set fechaComite
+  //     const fechaComite = new Date(date);
+  //     fechaComite.setDate(fechaComite.getDate() + 1);
+  
+  //     // Update the form control for fechaComite
+  //     this.validateFormCalendario.controls['fechaComite'].setValue(fechaComite);
+  //   }
+  // }
+
      // Función para deshabilitar fechas anteriores a hoy
+  // disabledDate1 = (current: Date): boolean => {
+  //   // No se pueden seleccionar fechas anteriores al día actual
+  //   return current < new Date();
+  // };
+
+  disabledDate2 = (current: Date, selectedDate?: Date): boolean => {
+    if (!selectedDate) return false; // If no date is selected, don't disable any dates.
+    const nextDay = new Date(selectedDate);
+    nextDay.setDate(nextDay.getDate() + 1); // Set to the day after the selected "Fecha de Entrega"
+    return current < nextDay;
+  };
+
+  disabledDate1 = (current: Date): boolean => {
+    // No se pueden seleccionar fechas anteriores al día actual
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 0); // Establece el día de mañana
+    return current < tomorrow;
+  };
+
   disabledDate = (current: Date): boolean => {
     // No se pueden seleccionar fechas anteriores al día actual
-    return current < new Date();
+       return current && current.getFullYear() < new Date().getFullYear();
   };
+
+
+
 
   calendarioActivo(){
 
