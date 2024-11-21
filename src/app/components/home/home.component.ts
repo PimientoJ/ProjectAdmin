@@ -250,20 +250,56 @@ validateFormCalendario: FormGroup<{
     return current < nextDay;
   };
 
-  disabledDate1 = (current: Date): boolean => {
-    // No se pueden seleccionar fechas anteriores al día actual
-    const tomorrow = new Date();
-    tomorrow.setDate(tomorrow.getDate() + 0); // Establece el día de mañana
-    return current < tomorrow;
-  };
-
   disabledDate = (current: Date): boolean => {
     // No se pueden seleccionar fechas anteriores al día actual
        return current && current.getFullYear() < new Date().getFullYear();
   };
 
+// Variables para fechas seleccionadas
+selectedFechaEntrega: Date | null = null;
+selectedFechaSesionComite: Date | null = null;
 
+// Lógica para deshabilitar fechas antes del día actual
+disabledDateToday = (current: Date): boolean => {
+  const today = new Date();
+  today.setHours(0, 0, 0, 0); // Ignorar la hora para comparación
+  return current <= today; // Cambiado para incluir un día adicional
+};
 
+// Lógica para deshabilitar fechas antes de "Fecha de Entrega"
+disabledDateComite = (current: Date): boolean => {
+  if (!this.selectedFechaEntrega) {
+    return true; // Si no hay fecha de entrega seleccionada, deshabilita todo
+  }
+  const entregaDate = new Date(this.selectedFechaEntrega);
+  entregaDate.setDate(entregaDate.getDate() + 1); // Añade un día
+  entregaDate.setHours(0, 0, 0, 0);
+  return current < entregaDate;
+};
+
+// Lógica para deshabilitar fechas antes de "Fecha de Sesión de Comité"
+disabledDateResultados = (current: Date): boolean => {
+  if (!this.selectedFechaSesionComite) {
+    return true; // Si no hay fecha de sesión seleccionada, deshabilita todo
+  }
+  const sesionComiteDate = new Date(this.selectedFechaSesionComite);
+  sesionComiteDate.setDate(sesionComiteDate.getDate() + 1); // Añade un día
+  sesionComiteDate.setHours(0, 0, 0, 0);
+  return current < sesionComiteDate;
+};
+
+// Manejo de cambios en "Fecha de Entrega"
+onFechaEntregaChange(date: Date): void {
+  this.selectedFechaEntrega = date;
+  this.validateFormCalendario.get('fechaSesionComite')?.reset(); // Reinicia la fecha de comité
+  this.selectedFechaSesionComite = null; // Actualiza para que se calcule correctamente
+}
+
+// Manejo de cambios en "Fecha de Sesión de Comité"
+onFechaSesionComiteChange(date: Date): void {
+  this.selectedFechaSesionComite = date;
+  this.validateFormCalendario.get('fechaEntregaResultados')?.reset(); // Reinicia la fecha de resultados
+}
 
   calendarioActivo(){
 
